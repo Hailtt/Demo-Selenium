@@ -89,7 +89,7 @@
         <version>3.2.5</version>
         <configuration>
           <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFile>demo_TC.xml</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
       </plugin>

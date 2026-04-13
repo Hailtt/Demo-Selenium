@@ -8,19 +8,24 @@ import org.testng.annotations.Parameters;
 import utils.DriverManager;
 
 public class BaseTest {
+    protected WebDriver driver;
 
     @BeforeMethod
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser) {
         DriverManager.setDriver(browser);
-    }
-
-    public WebDriver getDriver() {
-        return DriverManager.getDriver();
+        this.driver = DriverManager.getDriver();
+        this.driver.get("https://www.agoda.com/");
     }
 
     @AfterMethod
     public void tearDown() {
-        DriverManager.quitDriver();
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    public WebDriver getDriver() {
+        return DriverManager.getDriver();
     }
 }
