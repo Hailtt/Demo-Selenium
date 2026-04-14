@@ -1,11 +1,14 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BasePage {
+    private static final Logger log = LogManager.getLogger(HomePage.class);
 
     private By searchInput = By.id("textInput");
     private By checkInBox = By.id("check-in-box");
@@ -24,6 +27,8 @@ public class HomePage extends BasePage {
     }
 
     public void searchHotel(String hotelName) {
+        log.info("Searching for hotel: {}", hotelName);
+        utils.ExtentReportManager.logInfo("Searching for hotel: " + hotelName);
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
         setValue(searchInput, hotelName);
         wait.until(ExpectedConditions.visibilityOfElementLocated(sreachContentPopup));
@@ -58,6 +63,8 @@ public class HomePage extends BasePage {
     }
 
     public void selectDayPicker(String startDate, String endDate) {
+        log.info("Selecting dates: {} to {}", startDate, endDate);
+        utils.ExtentReportManager.logInfo("Selecting dates: " + startDate + " to " + endDate);
         wait.until(ExpectedConditions.visibilityOfElementLocated(checkInBox));
         clickElement(checkInBox);
         By startElement = By.xpath(String.format(dayPicker, startDate));
@@ -69,6 +76,7 @@ public class HomePage extends BasePage {
     }
 
     public void setOccupancyQuantity(int indexOption, int targetNumber) {
+        log.debug("Setting occupancy for option index {} to target number {}", indexOption, targetNumber);
         By rowLocator = By.xpath(String.format(occupancyOption, indexOption));
         WebElement rowElement = waitForElementVisible(rowLocator);
 

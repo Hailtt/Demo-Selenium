@@ -28,9 +28,8 @@ public class DriverManager {
         } else {
             throw new RuntimeException("Browser not supported: " + browser);
         }
-        
+
         dr.manage().window().maximize();
-        dr.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.set(dr);
     }
 
