@@ -110,6 +110,12 @@
           <suiteXmlFiles>
             <suiteXmlFile>demo_TC.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <properties>
+            <property>
+              <name>usedefaultlisteners</name>
+              <value>false</value>
+            </property>
+          </properties>
         </configuration>
       </plugin>
     </plugins>

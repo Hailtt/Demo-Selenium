@@ -23,8 +23,11 @@ public class ExtentReportManager {
     public static ExtentReports getInstance() {
         if (extent == null) {
             String reportPath = System.getProperty("user.dir") + "/target/ExtentReports/AgodaTestReport.html";
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
             
+            // Xóa folder screenshots cũ trước khi bắt đầu suite mới
+            cleanOldScreenshots();
+
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
             spark.config().setTheme(Theme.STANDARD);
             spark.config().setDocumentTitle("Agoda Automation Report");
             spark.config().setReportName("Test Execution Report");
@@ -36,6 +39,18 @@ public class ExtentReportManager {
             extent.setSystemInfo("User", "Tester");
         }
         return extent;
+    }
+
+    private static void cleanOldScreenshots() {
+        String directory = System.getProperty("user.dir") + "/target/screenshots/";
+        File folder = new File(directory);
+        if (folder.exists()) {
+            try {
+                FileUtils.cleanDirectory(folder);
+            } catch (IOException e) {
+                System.out.println("Could not clean old screenshots: " + e.getMessage());
+            }
+        }
     }
 
     public static ExtentTest getTest() {
@@ -58,7 +73,6 @@ public class ExtentReportManager {
             if (driver != null) {
                 String fileName = captureScreenshot(driver, "Step");
                 String relativePath = "../screenshots/" + fileName;
-                // Use MediaEntityBuilder to show image inline below the step
                 getTest().info(message, MediaEntityBuilder.createScreenCaptureFromPath(relativePath).build());
             } else {
                 getTest().info(message);
